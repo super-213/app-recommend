@@ -5,6 +5,7 @@ origin: recommended
 tags: [macOS, 系统工具, 存储管理]
 icon: ./images/icon.png
 download: https://github.com/Jarvis322/macos-sysdata/releases/latest
+installCommand: "brew install --cask Jarvis322/tap/sysdata"
 website: https://macos-sysdata.yigitech.dev/
 repository: https://github.com/Jarvis322/macos-sysdata
 ---

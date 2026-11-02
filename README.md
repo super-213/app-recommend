@@ -45,6 +45,7 @@ origin: self
 tags: [macOS, 效率工具]
 icon: ./images/icon.png
 download: https://example.com/download
+installCommand: "brew install --cask example-app"
 website: https://example.com
 repository: https://github.com/example/example-app
 ---
@@ -75,6 +76,7 @@ repository: https://github.com/example/example-app
 | `tags` | 是 | 标签数组，例如 `[macOS, 效率工具]`。筛选项由所有软件的标签自动汇总，无需单独维护。没有标签时可写 `[]`。 |
 | `icon` | 否 | 软件图标相对于 `index.md` 的路径，例如 `./images/icon.png`；省略时使用名称首字母作为占位图。 |
 | `download` | 否 | 完整下载地址，显示为醒目的「下载软件」按钮。 |
+| `installCommand` | 否 | 安装命令，例如 `brew install --cask example-app`；详情页显示命令和复制按钮，可与下载链接同时使用。填写命令本身，不要加前面的 `$` 提示符。 |
 | `website` | 否 | 完整官网地址，显示为「访问官网」按钮。 |
 | `repository` | 否 | 完整源码仓库地址，作为内容元数据保存；当前页面不会单独显示该字段。 |
 
