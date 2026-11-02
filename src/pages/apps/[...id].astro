@@ -1,0 +1,7 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+export async function getStaticPaths(){ return (await getCollection('apps')).map(app => ({ params: { id: app.id.replace(/\/index$/, '') }, props: { app } })); }
+const { app } = Astro.props; const { Content } = await render(app); const a = app.data;
+---
+<Base title={`${a.title} · 软件收藏`} description={a.description}><main class="detail"><a class="back" href="/" id="back">← <span>返回软件列表</span></a><section class="detail-head"><div class="app-icon large">{a.icon ? <img src={a.icon.src} alt=""/> : <span>{a.title.charAt(0).toUpperCase()}</span>}</div><div class="detail-info"><h1>{a.title}</h1><p class="detail-description">{a.description}</p><div class="chips"><span class="origin">{a.origin === 'self' ? '自己制作' : '推荐'}</span>{a.tags.map((tag:string) => <span class="chip">{tag}</span>)}</div><div class="actions">{a.download && <a class="button primary" href={a.download} target="_blank" rel="noopener noreferrer">下载软件 ↗</a>}{a.website && <a class="button secondary" href={a.website} target="_blank" rel="noopener noreferrer">访问官网 ↗</a>}</div></div></section><hr/><article class="prose"><Content /></article></main><script>const back = document.querySelector('#back'); if(back instanceof HTMLAnchorElement && sessionStorage.getItem('catalog-url')) back.href = sessionStorage.getItem('catalog-url')!;</script></Base>

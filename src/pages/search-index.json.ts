@@ -1,0 +1,2 @@
+import { getCollection } from 'astro:content';
+export async function GET(){const apps=await getCollection('apps');return new Response(JSON.stringify(apps.sort((a,b)=>a.data.title.localeCompare(b.data.title)).map(a=>({id:a.id.replace(/\/index$/, ''),title:a.data.title,description:a.data.description,origin:a.data.origin,tags:a.data.tags,icon:a.data.icon?.src}))),{headers:{'Content-Type':'application/json'}})}

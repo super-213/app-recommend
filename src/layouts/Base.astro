@@ -1,0 +1,17 @@
+---
+import '../styles/global.css';
+const { title = '软件收藏', description = '软件收藏' } = Astro.props;
+---
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#f6f7f3"/><meta name="description" content={description}/><link rel="manifest" href="/manifest.webmanifest"/><link rel="icon" href="/icon.svg" type="image/svg+xml"/><title>{title}</title></head><body><slot/><script>if ('serviceWorker' in navigator && import.meta.env.PROD) window.addEventListener('load', async () => {
+  try {
+    const registration = await navigator.serviceWorker.register('/sw.js');
+    const prompt = () => {
+      if (!registration.waiting || document.querySelector('#update-site')) return;
+      const button = document.createElement('button'); button.id = 'update-site'; button.className = 'update-site'; button.textContent = '发现新版本，点击更新';
+      button.onclick = () => registration.waiting?.postMessage({type:'SKIP_WAITING'}); document.body.append(button);
+    };
+    if (registration.waiting) prompt();
+    registration.addEventListener('updatefound', () => registration.installing?.addEventListener('statechange', () => { if (registration.waiting && navigator.serviceWorker.controller) prompt(); }));
+    let refreshing = false; navigator.serviceWorker.addEventListener('controllerchange', () => { if (!refreshing) { refreshing = true; location.reload(); } });
+  } catch { /* 在线页面不依赖 Service Worker */ }
+});</script></body></html>

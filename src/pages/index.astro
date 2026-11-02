@@ -1,0 +1,8 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+const apps = (await getCollection('apps')).sort((a,b)=>a.data.title.localeCompare(b.data.title));
+const summaries = apps.map(a=>({id:a.id.replace(/\/index$/, ''),...a.data,icon:a.data.icon?.src}));
+const tags = [...new Set(apps.flatMap(a=>a.data.tags))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+---
+<Base><main class="catalog"><div class="search-wrap"><div class="search-box"><span aria-hidden="true" class="search-icon">⌕</span><input id="search" type="search" placeholder="搜索软件名称" aria-label="搜索软件名称" autocomplete="off"/><kbd>⌘ K</kbd></div></div><section class="content"><div class="filter-row"><span class="section-label">TAGS <span class="label-line"></span></span><div id="tags" class="tags"><button class="tag active" data-tag="">全部</button>{tags.map(t=><button class="tag" data-tag={t}>{t}</button>)}</div></div><div class="list-heading"><span id="count" class="count" data-total={apps.length}>{apps.length.toString().padStart(2,'0')} ITEMS</span></div><div id="notice" class="notice" hidden></div><div id="cards" class="cards">{summaries.slice(0,9).map(a=><a class="card" href={`/apps/${a.id}/`}><div class="card-top"><div class="app-icon">{a.icon ? <img src={a.icon} alt="" loading="lazy"/> : <span>{a.title.charAt(0).toUpperCase()}</span>}</div><span class="card-arrow">↗</span></div><div><h2>{a.title}</h2><p>{a.description}</p></div><div class="card-footer"><span class="origin">{a.origin === 'self' ? '自己制作' : '推荐'}</span>{a.tags.map(t=><span class="chip">{t}</span>)}</div></a>)}</div><nav id="pagination" class="pagination" aria-label="分页"></nav></section></main><script src="../scripts/catalog.ts"></script></Base>
