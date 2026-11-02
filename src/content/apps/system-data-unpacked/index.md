@@ -3,6 +3,7 @@ title: System Data Unpacked
 description: 看清 Mac 系统数据的构成，逐项检查和清理存储空间。
 origin: recommended
 tags: [macOS, 系统工具, 存储管理]
+icon: ./images/icon.png
 download: https://github.com/Jarvis322/macos-sysdata/releases/latest
 website: https://macos-sysdata.yigitech.dev/
 repository: https://github.com/Jarvis322/macos-sysdata
