@@ -1,0 +1,4 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="组件样式 · 软件收藏"><main class="detail style-guide"><a class="back" href="/">← 返回软件列表</a><h1>组件样式</h1><p class="detail-description">用于检查组件在不同主题和屏幕尺寸下的显示。</p><h2>筛选状态</h2><div class="tags"><button class="tag">默认</button><button class="tag active" aria-pressed="true">选中</button><button class="tag" disabled>禁用</button></div><h2>卡片与标签</h2><div class="cards"><a class="card" href="/"><div class="card-top"><div class="app-icon">A</div><span class="card-arrow" aria-hidden="true">↗</span></div><div><h2>示例软件</h2><p>用于检查图标、标题、简介和标签的排版。</p></div><div class="card-footer"><span class="origin">推荐</span><span class="origin mine">自己制作</span><span class="chip">实用工具</span><span class="chip platform">macOS</span></div></a></div><h2>分页状态</h2><div class="pagination"><button class="page" disabled>上一页</button><button class="page current" aria-current="page">1</button><button class="page">2</button></div></main></Base>

@@ -10,10 +10,14 @@ try {
   }
   execFileSync('npm',['run','build'],{stdio:'inherit',env:{...process.env,ASTRO_TELEMETRY_DISABLED:'1'}});
   const first=JSON.parse(await readFile('dist/catalog/1.json','utf8'));
-  const second=JSON.parse(await readFile('dist/catalog/2.json','utf8'));
   const index=JSON.parse(await readFile('dist/search-index.json','utf8'));
-  assert.equal(first.length,9); assert.equal(second.length,2); assert.equal(index.length,11);
-  assert.equal(new Set([...first,...second].map(a=>a.id)).size,11);
+  const pages = await Promise.all(Array.from({length: Math.ceil(index.length / 9)}, (_, i) => readFile(`dist/catalog/${i + 1}.json`, 'utf8').then(JSON.parse)));
+  const entries = pages.flat();
+  assert.equal(first.length, 9);
+  assert.ok(pages.every((items, i) => items.length === Math.min(9, index.length - i * 9)));
+  assert.equal(entries.length, index.length);
+  assert.equal(new Set(entries.map(a => a.id)).size, index.length);
+  assert.deepEqual(new Set(entries.map(a => a.id)), new Set(index.map(a => a.id)));
   const html=await readFile('dist/apps/__test-fixtures/fixture-0/index.html','utf8');
   assert.match(html,/图文测试/); assert.match(html,/alt="示例图片"/); assert.match(html,/_astro\//);
   console.log('分页、搜索索引和 Markdown 相对图片构建检查通过。');
